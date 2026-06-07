@@ -1,56 +1,125 @@
-﻿# Portfolio — Martin Languillé
+﻿# 🚀 Martin Languillé — Portfolio Cloud & AWS
 
-Portfolio professionnel moderne conçu pour une transition vers Cloud Engineer puis AWS Solution Architect.
-Le site est prêt pour un déploiement statique sur AWS S3 + CloudFront.
+> Portfolio professionnel conçu pour accompagner mon évolution vers des fonctions de Cloud Engineer puis AWS Solution Architect.
 
-## Description
+🌐 Site : https://languille.site
 
-Ce portfolio met en avant :
-- une transition professionnelle honnête vers AWS,
-- une expérience SaaS hospitalière solide,
-- des compétences Cloud, DevOps, infrastructure et développement,
-- un projet public unique : `docker-api-lab`,
-- une roadmap AWS claire,
-- une section certifications avec placeholders pour les badges.
+---
 
-## Architecture AWS recommandée
+# 🏗️ Architecture du projet
 
-- Amazon S3 : hébergement statique des fichiers HTML/CSS/JS.
-- Amazon CloudFront : distribution globale et TLS.
-- AWS Certificate Manager (ACM) : certificat SSL.
-- Amazon Route 53 : gestion DNS.
+Ce portfolio est hébergé sur une architecture Cloud AWS moderne et serverless.
 
-Flux : Utilisateur → CloudFront (HTTPS, ACM) → S3 (site statique)
-
-## Installation
-
-Copiez le dossier du projet puis ouvrez `index.html` dans un navigateur pour vérifier le rendu local.
-
-## Déploiement AWS
-
-Synchroniser vers un bucket S3 :
-
-```bash
-aws s3 sync . s3://martin-portfolio --delete
+```text
+Utilisateur
+      │
+      ▼
+Cloudflare DNS
+      │
+      ▼
+CloudFront
+      │
+      ▼
+Amazon S3
 ```
 
-Puis invalider CloudFront :
+Services AWS utilisés :
 
-```bash
-aws cloudfront create-invalidation --distribution-id <DISTRIBUTION_ID> --paths "/*"
+| Service                 | Rôle                         |
+| ----------------------- | ---------------------------- |
+| Amazon S3               | Hébergement statique du site |
+| Amazon CloudFront       | CDN mondial et HTTPS         |
+| AWS Certificate Manager | Certificat SSL/TLS           |
+| Cloudflare              | Gestion DNS du domaine       |
+| AWS CLI                 | Déploiement automatisé       |
+
+---
+
+# 🛠️ Stack technique
+
+### Frontend
+
+* HTML5
+* CSS3
+* JavaScript
+
+### Cloud
+
+* Amazon S3
+* Amazon CloudFront
+* AWS Certificate Manager
+
+### Outils
+
+* VS Code
+* Git
+* GitHub
+* AWS CLI
+
+---
+
+# 📂 Structure du projet
+
+```text
+portfolio-aws/
+│
+├── index.html
+├── style.css
+├── script.js
+│
+├── assets/
+│   ├── photo.png
+│   ├── numihfrance.png
+│   └── unilasalle.png
+│
+└── README.md
 ```
 
-## Structure du projet
+---
 
-- `index.html` : page principale.
-- `style.css` : styles visuels et responsive.
-- `script.js` : comportement de navigation mobile et mise à jour de l'année.
-- `assets/` : dossier des images (`photo.png`, `numihfrance.png`, `unilasalle.png`).
+# 🚀 Déploiement
 
-## À compléter
+Synchronisation vers Amazon S3 :
 
-- Ajouter `assets/photo.png` pour la photo de profil.
-- Ajouter `assets/numihfrance.png` et `assets/unilasalle.png` pour les logos.
-- Remplacer le lien CV placeholder par un vrai fichier PDF.
-- Ajouter badges de certification AWS et Terraform.
-- Déployer sur AWS S3 / CloudFront.
+```bash
+aws s3 sync . s3://martin-languille-portfolio --delete
+```
+
+Invalidation du cache CloudFront :
+
+```bash
+aws cloudfront create-invalidation \
+  --distribution-id DISTRIBUTION_ID \
+  --paths "/*"
+```
+
+---
+
+# 🔐 Sécurité
+
+Le site est distribué via HTTPS grâce à :
+
+* AWS Certificate Manager
+* Amazon CloudFront
+* Cloudflare DNS
+
+Le bucket S3 reste privé et n'est accessible qu'à travers CloudFront.
+
+---
+
+# 📫 Contact
+
+🌐 Site : https://languille.site
+
+💼 LinkedIn :
+https://fr.linkedin.com/in/martin-languill%C3%A9-6194aa133
+
+💻 GitHub :
+https://github.com/Astroboy-ML
+
+📧 Email :
+[martin.languille@gmail.com](mailto:martin.languille@gmail.com)
+
+---
+
+> Continuous learning. Continuous improvement. Cloud first.
