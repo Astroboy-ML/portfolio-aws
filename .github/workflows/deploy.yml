@@ -1,28 +1,49 @@
+# Nom du workflow affiché dans l’onglet "Actions" de GitHub
 name: Deploy Portfolio
 
+# Déclencheur du workflow
 on:
+  # Le workflow se lance à chaque push
   push:
+    # Uniquement sur la branche main
     branches:
       - main
 
+# Permissions accordées au workflow GitHub Actions
 permissions:
+  # Autorise GitHub Actions à demander un token OIDC
+  # Ce token permet de s’authentifier auprès d’AWS sans clé d’accès
   id-token: write
+
+  # Autorise GitHub Actions à lire le contenu du repository
+  # Nécessaire pour récupérer les fichiers du portfolio
   contents: read
 
+# Liste des jobs exécutés par le workflow
 jobs:
+  # Nom logique du job
   deploy:
+    # Le job s’exécute sur une machine virtuelle Ubuntu fournie par GitHub
     runs-on: ubuntu-latest
 
+    # Liste des étapes exécutées dans l’ordre
     steps:
+      # Étape 1 : récupérer le code source du repository
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Étape 2 : configurer l’authentification AWS via OIDC
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
+          # Rôle IAM AWS que GitHub Actions va assumer temporairement
+          # Ce rôle donne uniquement les permissions nécessaires au déploiement
           role-to-assume: arn:aws:iam::903609216265:role/GitHubActionsPortfolioDeployRole
+
+          # Région AWS utilisée pour les appels AWS CLI
           aws-region: eu-west-3
 
+      # Étape 3 : synchroniser les fichiers du repository vers le bucket S3
       - name: Deploy to S3
         run: |
           aws s3 sync . s3://martin-languille-portfolio \
@@ -31,6 +52,8 @@ jobs:
             --exclude ".github/*" \
             --exclude "README.md"
 
+      # Étape 4 : invalider le cache CloudFront
+      # Cela force CloudFront à servir la nouvelle version du site
       - name: Invalidate CloudFront
         run: |
           aws cloudfront create-invalidation \
