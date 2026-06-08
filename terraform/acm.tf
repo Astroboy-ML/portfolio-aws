@@ -10,7 +10,7 @@ resource "aws_acm_certificate" "portfolio" {
   validation_method = "DNS"
 
   lifecycle {
-    prevent_destroy = true
+    create_before_destroy = true
   }
 
   tags = {
@@ -25,6 +25,6 @@ resource "aws_acm_certificate_validation" "portfolio" {
   certificate_arn = aws_acm_certificate.portfolio.arn
 
   validation_record_fqdns = [
-    for record in cloudflare_dns_record.acm_validation : record.name
+    for record in cloudflare_dns_record.acm_validation : "${record.name}."
   ]
 }
