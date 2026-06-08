@@ -45,12 +45,14 @@ jobs:
 
       # Étape 3 : synchroniser les fichiers du repository vers le bucket S3
       - name: Deploy to S3
-        run: |
-          aws s3 sync . s3://martin-languille-portfolio \
-            --delete \
-            --exclude ".git/*" \
-            --exclude ".github/*" \
-            --exclude "README.md"
+  run: |
+    aws s3 sync . s3://martin-languille-portfolio \
+      --delete \
+      --exclude "*" \
+      --include "index.html" \
+      --include "style.css" \
+      --include "script.js" \
+      --include "assets/*"
 
       # Étape 4 : invalider le cache CloudFront
       # Cela force CloudFront à servir la nouvelle version du site
