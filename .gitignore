@@ -2,6 +2,8 @@
 .terraform/
 *.tfstate
 *.tfstate.*
+*.tfvars
+*.tfvars.json
 crash.log
 crash.*.log
 override.tf
@@ -14,4 +16,3 @@ override.tf.json
 .idea/
 .DS_Store
 Thumbs.db
-
