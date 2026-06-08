@@ -33,40 +33,41 @@ resource "aws_iam_role" "github_actions" {
       }
     ]
   })
+}
 
-  inline_policy {
-    name = "PortfolioDeploymentPolicy"
+resource "aws_iam_role_policy" "portfolio_deployment" {
+  name = "PortfolioDeploymentPolicy"
+  role = aws_iam_role.github_actions.id
 
-    policy = jsonencode({
-      Version = "2012-10-17"
-      Statement = [
-        {
-          Sid    = "ListPortfolioBucket"
-          Effect = "Allow"
-          Action = [
-            "s3:ListBucket"
-          ]
-          Resource = "arn:aws:s3:::martin-languille-portfolio"
-        },
-        {
-          Sid    = "ManagePortfolioObjects"
-          Effect = "Allow"
-          Action = [
-            "s3:GetObject",
-            "s3:PutObject",
-            "s3:DeleteObject"
-          ]
-          Resource = "arn:aws:s3:::martin-languille-portfolio/*"
-        },
-        {
-          Sid    = "CloudFrontInvalidate"
-          Effect = "Allow"
-          Action = [
-            "cloudfront:CreateInvalidation"
-          ]
-          Resource = "*"
-        }
-      ]
-    })
-  }
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = "ListPortfolioBucket"
+        Effect = "Allow"
+        Action = [
+          "s3:ListBucket"
+        ]
+        Resource = aws_s3_bucket.portfolio.arn
+      },
+      {
+        Sid    = "ManagePortfolioObjects"
+        Effect = "Allow"
+        Action = [
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:DeleteObject"
+        ]
+        Resource = "${aws_s3_bucket.portfolio.arn}/*"
+      },
+      {
+        Sid    = "CloudFrontInvalidate"
+        Effect = "Allow"
+        Action = [
+          "cloudfront:CreateInvalidation"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
 }
