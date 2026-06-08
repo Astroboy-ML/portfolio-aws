@@ -1,4 +1,10 @@
-﻿# 🚀 Martin Languillé — Portfolio Cloud & AWS
+﻿# 🚀 Martin Languillé — Portfolio Cloud & AWS 
+
+![Terraform](https://img.shields.io/badge/Terraform-IaC-623CE4)
+![AWS](https://img.shields.io/badge/AWS-Cloud-FF9900)
+![CloudFront](https://img.shields.io/badge/CloudFront-CDN-blue)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI%2FCD-2088FF)
+![Cloudflare](https://img.shields.io/badge/Cloudflare-DNS-F38020)
 
 > Portfolio professionnel conçu pour accompagner mon évolution vers des fonctions de Cloud Engineer puis AWS Solutions Architect.
 
