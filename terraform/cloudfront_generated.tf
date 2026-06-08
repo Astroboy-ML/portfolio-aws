@@ -62,7 +62,7 @@ resource "aws_cloudfront_distribution" "portfolio" {
     }
   }
   viewer_certificate {
-    acm_certificate_arn            = "arn:aws:acm:us-east-1:903609216265:certificate/9536543c-3303-4539-aca3-55106cbe72a9"
+    acm_certificate_arn            = aws_acm_certificate.portfolio.arn
     cloudfront_default_certificate = false
     iam_certificate_id             = null
     minimum_protocol_version       = "TLSv1.2_2021"
